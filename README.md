@@ -18,4 +18,4 @@ Wisnuyasha Faizal / ITS
   - [ ] Create (local storage) & Delete
   - [ ] Update (query string)
 - [x] Light & dark mode
-- [ ] Edit user page
+- [x] Edit user page

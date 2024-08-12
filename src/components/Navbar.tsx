@@ -2,10 +2,8 @@ import React from "react";
 import { MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ name }: { name: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const name = localStorage.getItem("name");
   const navigate = useNavigate();
 
   function handleLogout() {
