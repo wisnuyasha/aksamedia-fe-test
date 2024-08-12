@@ -1,4 +1,3 @@
-import React from "react";
 import clsxm from "../../utils/clsxm";
 
 export default function Sidebar({
