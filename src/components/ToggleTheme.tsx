@@ -27,7 +27,7 @@ function ToggleTheme() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="absolute left-5 top-5 rounded-md border-[1px] bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:border-zinc-700 dark:hover:bg-zinc-700 hover:transition-all hover:ease-linear drop-shadow-sm hover:duration-200 p-3"
+      className="absolute left-5 md:left-10 top-6 md:top-5 rounded-md border-[1px] border-zinc-300 bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:border-zinc-700 dark:hover:bg-zinc-700 hover:transition-all hover:ease-linear drop-shadow-sm hover:duration-200 p-3"
     >
       {isDarkMode ? (
         <MdDarkMode className="size-5 text-zinc-100" />

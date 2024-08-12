@@ -8,7 +8,7 @@ export default function Sidebar({
   handleActivePage: (page: string) => void;
 }) {
   return (
-    <div className="md:h-screen px-16 py-28 w-full md:w-1/4 flex flex-col justify-start items-start">
+    <div className="md:h-screen px-10 py-28 md:px-16 md:py-28 w-full md:w-1/4 flex flex-col justify-start items-start">
       <div className="flex flex-col ">
         <h1 className="font-bold text-4xl text-zinc-900 dark:text-zinc-100 mb-9">
           Todo List

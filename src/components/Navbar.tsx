@@ -18,7 +18,7 @@ export default function Navbar({ name }: { name: string }) {
   return (
     <nav className="absolute top-5 md:right-10 md:top-5 rounded-lg px-6 bg-white shadow-sm dark:bg-zinc-950 py-3 border-[1px] border-zinc-300 dark:border-zinc-700">
       <main className="relative flex items-center justify-center gap-x-5">
-        <p className="font-bold text-lg w-fit text-zinc-900 dark:text-zinc-100">
+        <p className="font-bold cursor-crosshair text-lg w-fit text-zinc-900 dark:text-zinc-100">
           {name}
         </p>
         <div className="min-h-5 w-[1px] rounded-sm bg-zinc-300 dark:bg-zinc-700" />

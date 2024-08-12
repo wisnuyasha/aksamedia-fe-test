@@ -15,7 +15,7 @@ Wisnuyasha Faizal / ITS
   - [x] Show user
 - [ ] CRUD (Table)
   - [ ] Read (Pagination & search/filter)
-  - [ ] Create (local storage) & Delete
   - [ ] Update (query string)
+  - [x] Create (local storage) & Delete
 - [x] Light & dark mode
 - [x] Edit user page

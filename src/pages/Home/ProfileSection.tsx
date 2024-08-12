@@ -11,21 +11,23 @@ export default function ProfileSection({
   const [updatedName, setUpdatedName] = React.useState<string>(name);
   function handleChangeName(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onChangeName(updatedName);
+    if (updatedName !== name) {
+      onChangeName(updatedName);
+    }
   }
 
   return (
-    <div className="w-full px-6 max-w-5xl md:pt-56">
+    <div className="w-full px-8 max-w-5xl md:pt-56">
       <div className="bg-white dark:bg-zinc-950 border-[1px] border-zinc-300 dark:border-zinc-700 rounded-xl drop-shadow">
         <form onSubmit={handleChangeName}>
           <div className="p-6 flex flex-col gap-y-6">
             <div className="flex flex-col gap-x-1.5">
-              <span className="font-bold text-zinc-900 dark:text-zinc-100 text-lg">
+              <h2 className="font-bold text-zinc-900 dark:text-zinc-100 text-base md:text-lg">
                 Edit Name
-              </span>
-              <span className="text-zinc-500 dark:text-zinc-400">
+              </h2>
+              <p className="text-zinc-500 text-sm md:text-base dark:text-zinc-400">
                 Edit your name here
-              </span>
+              </p>
             </div>
             <input
               name="name"
@@ -38,7 +40,7 @@ export default function ProfileSection({
             />
           </div>
 
-          <div className="w-full bg-zinc-300 dark:bg-zinc-700 h-[1px]" />
+          <div className="seperator w-full bg-zinc-300 dark:bg-zinc-700 h-[1px]" />
 
           <div className="p-6">
             <button
