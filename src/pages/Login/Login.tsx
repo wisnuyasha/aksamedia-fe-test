@@ -36,7 +36,7 @@ export default function App() {
   }
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-zinc-900">
+    <main className="flex min-h-screen duration-500 w-full flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-zinc-900">
       <ToggleTheme />
       <section className="h-full min-h-screen flex flex-col justify-center items-center w-full">
         <div className="h-fit flex flex-col gap-y-4 p-6 md:p-10 rounded-xl lg:min-w-96 border-[1px] border-zinc-300 dark:border-zinc-700 shadow-sm bg-white dark:bg-zinc-950">
@@ -110,11 +110,6 @@ export default function App() {
                 Login
               </p>
             </button>
-            {/* <button className="py-2 md:py-2.5 mt-1 w-full bg-transparent dark:bg-transparent border-[1px] border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:duration-500 rounded-lg">
-              <p className="font-sans font-medium text-xs md:text-sm text-zinc-900 dark:text-zinc-100">
-                Hack
-              </p>
-            </button> */}
             {errors.length > 0 && (
               <p className="text-red-400 text-sm font-medium">{errors}</p>
             )}

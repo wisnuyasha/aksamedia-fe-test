@@ -20,7 +20,7 @@ export default function App() {
   };
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+    <main className="flex min-h-screen duration-500 w-full flex-col items-center justify-center overflow-hidden bg-zinc-100 dark:bg-zinc-900">
       <ToggleTheme />
       <Navbar name={name} />
       <Home name={name} onChangeName={handleChangeName} />
