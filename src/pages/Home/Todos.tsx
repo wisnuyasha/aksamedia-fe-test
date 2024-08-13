@@ -15,8 +15,13 @@ export default function Todos({
 }: {
   handleActivePage: (page: string) => void;
 }) {
+  //#region  //*=========== Todo States ===========
+
   const [todos, setTodos] = React.useState<TTodo[]>([]);
   const [filteredTodos, setFilteredTodos] = React.useState<TTodo[]>([]);
+
+  //#region  //*=========== Query String & Search States ===========
+
   const [search, setSearch] = React.useState<string>(() => {
     const storedSearch = localStorage.getItem("search");
     return storedSearch ? storedSearch : "";
@@ -26,14 +31,26 @@ export default function Todos({
     const storedPage = localStorage.getItem("currentPage");
     return storedPage ? parseInt(storedPage, 10) : 1;
   });
+
+  //#region  //*=========== Edit User States ===========
+
   const [isModal, setIsModal] = React.useState<boolean>(false);
   const [todoEdit, setTodoEdit] = React.useState<TTodo | null>(null);
 
-  {
-    /* 
-    Query string implementation
-    */
+  //#region  //*=========== Get Todos from local storage ===========
+
+  function getTodosFromLocalStorage(): TTodo[] {
+    const todosRaw = localStorage.getItem("todos");
+    return JSON.parse(todosRaw ?? "[]");
   }
+
+  React.useEffect(() => {
+    const storedTodos = getTodosFromLocalStorage();
+    setTodos(storedTodos);
+    setFilteredTodos(storedTodos);
+  }, []);
+
+  //#region  //*=========== Query String Func ===========
 
   function updateQueryString(page: number, keyword: string) {
     const query = new URLSearchParams();
@@ -70,43 +87,19 @@ export default function Todos({
     updateQueryString(currentPage, search);
   }, [currentPage, search]);
 
-  {
-    /* 
-    Table & Pagination implementation
-    */
-  }
+  //#region  //*=========== Pagination Func ===========
 
   const todosPerPage: number = 3;
   const total = Math.ceil(filteredTodos.length / todosPerPage);
 
-  function getTodosFromLocalStorage(): TTodo[] {
-    const todosRaw = localStorage.getItem("todos");
-    return JSON.parse(todosRaw ?? "[]");
+  const startIdx = (currentPage - 1) * todosPerPage;
+  const currentTodos = filteredTodos.slice(startIdx, startIdx + todosPerPage);
+
+  function handlePagination(newPage: number) {
+    setCurrentPage(newPage);
   }
 
-  React.useEffect(() => {
-    const storedTodos = getTodosFromLocalStorage();
-    setTodos(storedTodos);
-    setFilteredTodos(storedTodos);
-  }, []);
-
-  function handleDelete(task: string) {
-    const updatedTodos = todos.filter((todo) => todo.task !== task);
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-
-    const newFilteredTodos = updatedTodos.filter((todo) =>
-      todo.task.toLowerCase().includes(search.toLowerCase())
-    );
-
-    setFilteredTodos(newFilteredTodos);
-
-    if (currentPage > total) {
-      setCurrentPage(total - 1);
-    } else if (newFilteredTodos.length === 0) {
-      setCurrentPage(1);
-    }
-  }
+  //#region  //*=========== Search Func ===========
 
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -115,12 +108,9 @@ export default function Todos({
       todo.task.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredTodos(filtered);
+
     setIsSearch(true);
     setCurrentPage(1);
-  }
-
-  function handlePagination(newPage: number) {
-    setCurrentPage(newPage);
   }
 
   function handleClearFilter() {
@@ -129,13 +119,25 @@ export default function Todos({
     setIsSearch(false);
   }
 
+  //#region  //*=========== Table Action Func ===========
+
+  function handleDelete(task: string) {
+    const updatedTodos = todos.filter((todo) => todo.task !== task);
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+    /** Case when deleting while search */
+    const newFilteredTodos = updatedTodos.filter((todo) =>
+      todo.task.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setFilteredTodos(newFilteredTodos);
+  }
+
   function handleEdit(todo: TTodo) {
     setTodoEdit(todo);
     setIsModal(true);
   }
-
-  const startIdx = (currentPage - 1) * todosPerPage;
-  const currentTodos = filteredTodos.slice(startIdx, startIdx + todosPerPage);
 
   function handleIsModal() {
     setIsModal(!isModal);
@@ -149,7 +151,7 @@ export default function Todos({
         handleIsModal={handleIsModal}
         todo={todoEdit}
       />
-      <div className="w-full px-8 max-w-5xl md:pt-56">
+      <div className="w-full px-8 pb-10 md:pb-0 max-w-5xl md:pt-56">
         <div className="bg-white dark:bg-zinc-950 border-[1px] border-zinc-300 dark:border-zinc-700 rounded-xl drop-shadow">
           <div className="pt-6 px-6">
             <h2 className="font-bold text-zinc-900 dark:text-zinc-100 text-base mb-1 md:text-xl">
@@ -247,7 +249,7 @@ export default function Todos({
                     <div
                       className={clsxm(
                         "col-span-3 py-2.5 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-900 group-hover:duration-300",
-                        filteredTodos.length - 1 !== idx &&
+                        currentTodos.length - 1 !== idx &&
                           "border-b-[1px] border-zinc-300 dark:border-zinc-700"
                       )}
                     >
@@ -258,7 +260,7 @@ export default function Todos({
                     <div
                       className={clsxm(
                         "col-span-6 py-2.5 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-900 group-hover:duration-300",
-                        filteredTodos.length - 1 !== idx &&
+                        currentTodos.length - 1 !== idx &&
                           "border-b-[1px] border-zinc-300 dark:border-zinc-700"
                       )}
                     >
@@ -269,7 +271,7 @@ export default function Todos({
                     <div
                       className={clsxm(
                         "col-span-3 py-2.5 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-900 flex items-center pl-2 gap-x-3 group-hover:duration-300",
-                        filteredTodos.length - 1 !== idx &&
+                        currentTodos.length - 1 !== idx &&
                           "border-b-[1px] border-zinc-300 dark:border-zinc-700"
                       )}
                     >

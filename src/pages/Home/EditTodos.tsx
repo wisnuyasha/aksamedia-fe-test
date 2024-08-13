@@ -55,18 +55,30 @@ export default function EditTodos({
 
   return (
     <div
+      onClick={() => {
+        handleIsModal();
+      }}
       className={clsxm(
         "absolute z-50 w-full h-full bg-zinc-900/80 flex justify-center items-center",
         !isModal && "hidden"
       )}
     >
-      <div className="absolute w-fit h-fit size-40 p-6 bg-zinc-50 rounded-lg">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className="absolute w-fit h-fit size-40 p-6 bg-zinc-50 dark:bg-zinc-950 border-zinc-300 dark:border-zinc-700 border-[1px] rounded-lg"
+      >
+        <IoCloseOutline
+          onClick={handleIsModal}
+          className="absolute right-5 bursor cursor-pointer top-5 text-zinc-900 dark:text-zinc-500 size-5"
+        />
         <form onSubmit={handleEdit} className="">
           <div className="flex flex-col gap-x-1.5">
             <h2 className="font-bold text-zinc-900 dark:text-zinc-100 text-base md:text-lg">
               Edit Todo
             </h2>
-            <p className="text-zinc-500 text-sm md:text-base dark:text-zinc-400">
+            <p className="text-zinc-500 text-sm md:text-base max-w-96 dark:text-zinc-400">
               Make changes to your todo here. Click save when you're done.
             </p>
           </div>
@@ -121,10 +133,6 @@ export default function EditTodos({
             </button>
           </div>
         </form>
-        <IoCloseOutline
-          onClick={handleIsModal}
-          className="absolute right-5 bursor cursor-pointer top-5 text-zinc-900 size-5"
-        />
       </div>
     </div>
   );
