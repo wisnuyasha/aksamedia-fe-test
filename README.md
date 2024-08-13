@@ -13,9 +13,9 @@ Wisnuyasha Faizal / ITS
 - [x] Navbar
   - [x] Dropdown logout
   - [x] Show user
-- [ ] CRUD (Table)
-  - [ ] Read (Pagination & search/filter)
-  - [ ] Update (query string)
+- [x] CRUD (Table)
+  - [x] Read (Pagination & search/filter & query string)
+  - [x] Update
   - [x] Create (local storage) & Delete
 - [x] Light & dark mode
 - [x] Edit user page

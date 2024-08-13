@@ -1,95 +1,127 @@
 import React, { FormEvent } from "react";
+// import clsxm from "../../utils/clsxm";
+// import { TTodo } from "../../types/TTodo";
+import { IoCloseOutline } from "react-icons/io5";
 import clsxm from "../../utils/clsxm";
 import { TTodo } from "../../types/TTodo";
 
-export default function CreateTodo() {
-  const [task, setTask] = React.useState<string>("");
-  const [desc, setDesc] = React.useState<string>("");
+export default function EditTodos({
+  todo,
+  isModal,
+  handleIsModal,
+}: {
+  todo: TTodo | null;
+  isModal: boolean;
+  handleIsModal: () => void;
+}) {
+  const [updatedTask, setUpdatedTask] = React.useState<string>(
+    todo?.task ?? ""
+  );
+  const [updatedDesc, setUpdatedDesc] = React.useState<string>(
+    todo?.desc ?? ""
+  );
 
-  const todos: TTodo[] = JSON.parse(localStorage.getItem("todos") || "[]");
+  React.useEffect(() => {
+    setUpdatedTask(todo?.task ?? "");
+    setUpdatedDesc(todo?.desc ?? "");
+  }, [todo]);
 
-  function handleChangeName(event: FormEvent<HTMLFormElement>) {
+  function getTodosFromLocalStorage(): TTodo[] {
+    const todosRaw = localStorage.getItem("todos");
+    return JSON.parse(todosRaw ?? "[]");
+  }
+
+  function handleEdit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (task && desc) {
-      todos.push({
-        task,
-        desc,
-      });
-
-      localStorage.setItem("todos", JSON.stringify(todos));
-
-      setTask("");
-      setDesc("");
+    if (
+      (updatedTask !== todo?.task || updatedDesc !== todo?.desc) &&
+      updatedTask &&
+      updatedDesc
+    ) {
+      const updatedTodo: TTodo = { task: updatedTask, desc: updatedDesc };
+      const todos = getTodosFromLocalStorage();
+      const updatedTodos = todos.map((todo) =>
+        todo.task === updatedTodo.task ? updatedTodo : todo
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      //   onUpdateTodo(updatedTodo);
+      handleIsModal();
     }
   }
 
   return (
-    <div className="w-full px-8 max-w-5xl md:pt-56">
-      <div className="bg-white dark:bg-zinc-950 border-[1px] border-zinc-300 dark:border-zinc-700 rounded-xl drop-shadow">
-        <form onSubmit={handleChangeName}>
-          <div className="p-6 flex flex-col gap-y-6">
-            <div className="flex flex-col gap-x-1.5">
-              <h2 className="font-bold text-zinc-900 dark:text-zinc-100 text-base md:text-lg">
-                Edit Your Task
-              </h2>
-              <p className="text-zinc-500 text-sm md:text-base dark:text-zinc-400">
-                Create a new task and add details
-              </p>
-            </div>
-            <div className="flex flex-col gap-y-1.5">
+    <div
+      className={clsxm(
+        "absolute z-50 w-full h-full bg-zinc-900/80 flex justify-center items-center",
+        !isModal && "hidden"
+      )}
+    >
+      <div className="absolute w-fit h-fit size-40 p-6 bg-zinc-50 rounded-lg">
+        <form onSubmit={handleEdit} className="">
+          <div className="flex flex-col gap-x-1.5">
+            <h2 className="font-bold text-zinc-900 dark:text-zinc-100 text-base md:text-lg">
+              Edit Todo
+            </h2>
+            <p className="text-zinc-500 text-sm md:text-base dark:text-zinc-400">
+              Make changes to your todo here. Click save when you're done.
+            </p>
+          </div>
+          <div className="mb-10 mt-8 w-full gap-y-5 flex flex-col items-end">
+            <div className="flex items-center gap-x-5">
               <label
                 className={clsxm(
-                  "font-sans font-medium text-sm dark:text-zinc-50 text-zinc-600"
+                  "font-sans font-medium text-base dark:text-zinc-50 text-zinc-700"
                 )}
-                htmlFor="task"
+                htmlFor="updatedTask"
               >
                 Task
               </label>
               <input
-                name="task"
+                name="updatedTask"
                 className={clsxm(
-                  "w-full px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-base dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
+                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-lg dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
                 )}
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
+                value={updatedTask}
+                onChange={(e) => setUpdatedTask(e.target.value)}
                 required
               />
             </div>
-            <div className="flex flex-col gap-y-1.5">
+            <div className="flex items-center gap-x-5">
               <label
                 className={clsxm(
-                  "font-sans font-medium text-sm dark:text-zinc-50 text-zinc-600"
+                  "font-sans font-medium text-base dark:text-zinc-50 text-zinc-700"
                 )}
-                htmlFor="desc"
+                htmlFor="updatedDesc"
               >
                 Description
               </label>
               <textarea
-                name="task"
+                name="updatedDesc"
                 className={clsxm(
-                  "w-full px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-base dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
+                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-lg dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
                 )}
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
+                value={updatedDesc}
+                onChange={(e) => setUpdatedDesc(e.target.value)}
                 required
               />
             </div>
           </div>
-
-          <div className="seperator w-full bg-zinc-300 dark:bg-zinc-700 h-[1px]" />
-
-          <div className="p-6">
+          <div className="w-full flex justify-end">
             <button
               type="submit"
               className="px-5 rounded-md py-2 md:py-2 bg-zinc-900 dark:bg-zinc-50 border-[1px] border-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-300 hover:duration-500"
             >
               <p className="font-sans font-medium text-sm md:text-base text-zinc-50 dark:text-zinc-900">
-                Save
+                Save Changes
               </p>
             </button>
           </div>
         </form>
+        <IoCloseOutline
+          onClick={handleIsModal}
+          className="absolute right-5 bursor cursor-pointer top-5 text-zinc-900 size-5"
+        />
       </div>
     </div>
   );
