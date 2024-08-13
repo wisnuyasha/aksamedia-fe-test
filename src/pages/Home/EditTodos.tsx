@@ -39,10 +39,14 @@ export default function EditTodos({
       updatedTask &&
       updatedDesc
     ) {
-      const updatedTodo: TTodo = { task: updatedTask, desc: updatedDesc };
+      const updatedTodo: TTodo = {
+        id: todo?.id ?? "",
+        task: updatedTask,
+        desc: updatedDesc,
+      };
       const todos = getTodosFromLocalStorage();
       const updatedTodos = todos.map((todo) =>
-        todo.task === updatedTodo.task ? updatedTodo : todo
+        todo.id === updatedTodo.id ? updatedTodo : todo
       );
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       //   onUpdateTodo(updatedTodo);

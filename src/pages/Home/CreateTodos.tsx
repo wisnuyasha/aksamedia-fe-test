@@ -13,6 +13,7 @@ export default function CreateTodo() {
 
     if (task && desc) {
       todos.push({
+        id, 
         task,
         desc,
       });
