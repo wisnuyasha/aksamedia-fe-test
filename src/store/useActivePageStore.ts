@@ -1,8 +1,9 @@
 import { create } from "zustand";
+import { TSidebarMenu } from "../types/TSidebarMenus";
 
 interface activePageState {
-  activePage: string;
-  handleActivePage: (page: string) => void;
+  activePage: TSidebarMenu["name"];
+  handleActivePage: (page: TSidebarMenu["name"]) => void;
 }
 
 export const useActivePageStore = create<activePageState>()((set) => ({

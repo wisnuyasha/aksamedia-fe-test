@@ -1,6 +1,6 @@
 import React, { FormEvent } from "react";
-import clsxm from "../../../utils/clsxm";
-import { useUserStore } from "../../../store/useUserStore";
+import clsxm from "../../utils/clsxm";
+import { useUserStore } from "../../store/useUserStore";
 
 export default function EditUserForm() {
   const { mutateName, userName } = useUserStore();

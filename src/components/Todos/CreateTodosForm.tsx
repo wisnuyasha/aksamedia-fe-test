@@ -3,7 +3,7 @@ import clsxm from "../../utils/clsxm";
 import { TTodo } from "../../types/TTodo";
 import { uniqueId } from "lodash";
 
-export default function CreateTodo() {
+export default function CreateTodoForm() {
   const [task, setTask] = React.useState<string>("");
   const [desc, setDesc] = React.useState<string>("");
 
@@ -15,13 +15,14 @@ export default function CreateTodo() {
     event.preventDefault();
 
     if (task && desc) {
+
       const newTodo: TTodo = {
         id: uniqueId(),
         task: task,
         desc: desc,
       };
-
       const createTodo = [...todos, newTodo];
+      
       setTodos(createTodo);
       localStorage.setItem("todos", JSON.stringify(createTodo));
 

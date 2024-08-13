@@ -8,8 +8,8 @@ import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 
 import React, { FormEvent } from "react";
-import EditTodos from "./EditTodos";
 import { useActivePageStore } from "../../store/useActivePageStore";
+import EditTodosModal from "./EditTodosModal";
 
 export default function Todos() {
   const { handleActivePage } = useActivePageStore();
@@ -103,6 +103,10 @@ export default function Todos() {
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (!search) {
+      return;
+    }
+
     const filtered = todos.filter((todo) =>
       todo.task.toLowerCase().includes(search.toLowerCase())
     );
@@ -145,7 +149,7 @@ export default function Todos() {
 
   return (
     <>
-      <EditTodos
+      <EditTodosModal
         isModal={isModal}
         handleIsModal={handleIsModal}
         todo={todoEdit}
@@ -172,7 +176,6 @@ export default function Todos() {
                 placeholder="Search.."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                required
               />
               <div className="h-fit flex items-start w-full mb-1 gap-x-2">
                 <button

@@ -1,4 +1,6 @@
+import { SidebarMenus } from "../../constants/SidebarMenus";
 import { useActivePageStore } from "../../store/useActivePageStore";
+import { capitalize } from "../../utils/capitalize";
 import clsxm from "../../utils/clsxm";
 
 export default function Sidebar() {
@@ -10,39 +12,20 @@ export default function Sidebar() {
           Todo List
         </h1>
         <div className="flex flex-col gap-y-3">
-          <span
-            className={clsxm(
-              "text-lg cursor-pointer",
-              activePage === "todos"
-                ? "text-zinc-800 dark:text-zinc-100 font-bold"
-                : "text-zinc-600 dark:text-zinc-400"
-            )}
-            onClick={() => handleActivePage("todos")}
-          >
-            Todos
-          </span>
-          <span
-            className={clsxm(
-              "text-lg cursor-pointer",
-              activePage === "add"
-                ? "text-zinc-800 dark:text-zinc-100 font-bold"
-                : "text-zinc-600 dark:text-zinc-400"
-            )}
-            onClick={() => handleActivePage("add")}
-          >
-            Add
-          </span>
-          <span
-            className={clsxm(
-              "text-zinc-600 text-lg cursor-pointer",
-              activePage === "profile"
-                ? "text-zinc-800 dark:text-zinc-100 font-bold"
-                : "text-zinc-600 dark:text-zinc-400"
-            )}
-            onClick={() => handleActivePage("profile")}
-          >
-            Profile
-          </span>
+          {SidebarMenus.map((_, idx) => (
+            <span
+              key={idx}
+              className={clsxm(
+                "text-lg cursor-pointer",
+                activePage === SidebarMenus[idx]
+                  ? "text-zinc-800 dark:text-zinc-100 font-bold"
+                  : "text-zinc-600 dark:text-zinc-400"
+              )}
+              onClick={() => handleActivePage(SidebarMenus[idx])}
+            >
+              {capitalize(SidebarMenus[idx])}
+            </span>
+          ))}
         </div>
       </div>
     </div>

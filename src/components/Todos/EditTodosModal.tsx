@@ -1,11 +1,9 @@
 import React, { FormEvent } from "react";
-// import clsxm from "../../utils/clsxm";
-// import { TTodo } from "../../types/TTodo";
 import { IoCloseOutline } from "react-icons/io5";
 import clsxm from "../../utils/clsxm";
 import { TTodo } from "../../types/TTodo";
 
-export default function EditTodos({
+export default function EditTodosModal({
   todo,
   isModal,
   handleIsModal,
