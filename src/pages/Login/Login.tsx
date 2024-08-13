@@ -3,32 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { Users } from "../../constants/Users";
 import ToggleTheme from "../../components/Layouts/ToggleTheme";
 import clsxm from "../../utils/clsxm";
+import { useUserStore } from "../../store/useUserStore";
+import { useAuthLogin } from "../../middleware/useAuth";
 
 export default function App() {
+  const { mutateName } = useUserStore();
   const [errors, setErrors] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (
-      localStorage.getItem("name") !== undefined &&
-      localStorage.getItem("name") === "agus"
-    ) {
-      navigate("/");
-    }
-
-    if (localStorage.getItem("name")?.length === undefined) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  useAuthLogin();
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (name === Users.name && password === Users.password) {
       setErrors("");
-      localStorage.setItem("name", name);
+      mutateName(name);
       navigate("/");
     } else {
       setErrors("Wrong name or password");

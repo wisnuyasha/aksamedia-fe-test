@@ -1,18 +1,15 @@
 import React, { FormEvent } from "react";
 import clsxm from "../../utils/clsxm";
+import { useUserStore } from "../../store/useUserStore";
 
-export default function ProfileSection({
-  name,
-  onChangeName,
-}: {
-  name: string;
-  onChangeName: (newName: string) => void;
-}) {
-  const [updatedName, setUpdatedName] = React.useState<string>(name);
+export default function ProfileSection() {
+  const { mutateName, userName } = useUserStore();
+  const [updatedName, setUpdatedName] = React.useState<string>(userName);
+
   function handleChangeName(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (updatedName !== name) {
-      onChangeName(updatedName);
+    if (updatedName !== userName) {
+      mutateName(updatedName);
     }
   }
 

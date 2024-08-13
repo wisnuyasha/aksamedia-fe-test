@@ -1,13 +1,16 @@
 import React from "react";
 import { MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/useUserStore";
 
-export default function Navbar({ name }: { name: string }) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { userName, logout } = useUserStore();
+
   const navigate = useNavigate();
 
   function handleLogout() {
-    localStorage.removeItem("name");
+    logout();
     navigate("/login");
   }
 
@@ -19,7 +22,7 @@ export default function Navbar({ name }: { name: string }) {
     <nav className="absolute top-5 md:right-10 md:top-5 rounded-lg px-6 bg-white shadow-sm dark:bg-zinc-950 py-3 border-[1px] border-zinc-300 dark:border-zinc-700">
       <main className="relative flex items-center justify-center gap-x-5">
         <p className="font-bold cursor-crosshair text-lg w-fit text-zinc-900 dark:text-zinc-100">
-          {name}
+          {userName}
         </p>
         <div className="min-h-5 w-[1px] rounded-sm bg-zinc-300 dark:bg-zinc-700" />
         <MdLogout

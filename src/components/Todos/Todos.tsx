@@ -9,12 +9,11 @@ import { GrNext } from "react-icons/gr";
 
 import React, { FormEvent } from "react";
 import EditTodos from "./EditTodos";
+import { useActivePageStore } from "../../store/useActivePageStore";
 
-export default function Todos({
-  handleActivePage,
-}: {
-  handleActivePage: (page: string) => void;
-}) {
+export default function Todos() {
+  const { handleActivePage } = useActivePageStore();
+
   //#region  //*=========== Todo States ===========
 
   const [todos, setTodos] = React.useState<TTodo[]>([]);
