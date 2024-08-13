@@ -1,22 +1,27 @@
 import React, { FormEvent } from "react";
 import clsxm from "../../utils/clsxm";
 import { TTodo } from "../../types/TTodo";
+import { uniqueId } from "lodash";
 
 export default function CreateTodo() {
   const [task, setTask] = React.useState<string>("");
   const [desc, setDesc] = React.useState<string>("");
 
-  const todos: TTodo[] = JSON.parse(localStorage.getItem("todos") || "[]");
+  const [todos, setTodos] = React.useState<TTodo[]>(
+    JSON.parse(localStorage.getItem("todos") || "[]")
+  );
 
   function handleChangeName(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (task && desc) {
-      todos.push({
-        id, 
-        task,
-        desc,
-      });
+      const newTodo: TTodo = {
+        id: uniqueId(),
+        task: task,
+        desc: desc,
+      };
+
+      setTodos([...todos, newTodo]);
 
       localStorage.setItem("todos", JSON.stringify(todos));
 

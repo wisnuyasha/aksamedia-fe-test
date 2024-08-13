@@ -49,7 +49,6 @@ export default function EditTodos({
         todo.id === updatedTodo.id ? updatedTodo : todo
       );
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      //   onUpdateTodo(updatedTodo);
       handleIsModal();
     }
   }
