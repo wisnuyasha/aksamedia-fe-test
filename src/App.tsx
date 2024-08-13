@@ -1,7 +1,7 @@
 import React from "react";
-import ToggleTheme from "./components/ToggleTheme";
+import ToggleTheme from "./components/Layouts/ToggleTheme";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Layouts/Navbar";
 import Home from "./pages/Home/Home";
 
 export default function App() {

@@ -1,8 +1,8 @@
 import React from "react";
-import ProfileSection from "./ProfileSection";
-import Sidebar from "./Sidebar";
-import Todos from "./Todos";
-import CreateTodo from "./CreateTodos";
+import ProfileSection from "../../components/Home/ProfileSection";
+import Sidebar from "../../components/Home/Sidebar";
+import Todos from "../../components/Todos/Todos";
+import CreateTodo from "../../components/Todos/CreateTodos";
 
 export default function Home({
   name,

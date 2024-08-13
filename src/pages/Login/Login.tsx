@@ -1,7 +1,7 @@
 import React, { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users } from "../../constants/Users";
-import ToggleTheme from "../../components/ToggleTheme";
+import ToggleTheme from "../../components/Layouts/ToggleTheme";
 import clsxm from "../../utils/clsxm";
 
 export default function App() {
