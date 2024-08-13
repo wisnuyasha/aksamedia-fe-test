@@ -16,9 +16,62 @@ export default function Todos({
 }) {
   const [todos, setTodos] = React.useState<TTodo[]>([]);
   const [filteredTodos, setFilteredTodos] = React.useState<TTodo[]>([]);
-  const [search, setSearch] = React.useState<string>("");
+  const [search, setSearch] = React.useState<string>(() => {
+    const storedSearch = localStorage.getItem("search");
+    return storedSearch ? storedSearch : "";
+  });
   const [isSearch, setIsSearch] = React.useState<boolean>(false);
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(() => {
+    const storedPage = localStorage.getItem("currentPage");
+    return storedPage ? parseInt(storedPage, 10) : 1;
+  });
+
+  {
+    /* 
+    Query string implementation
+    */
+  }
+
+  function updateQueryString(page: number, keyword: string) {
+    const query = new URLSearchParams();
+    query.set("page", page.toString());
+    if (keyword) {
+      query.set("search", keyword);
+    }
+    window.history.replaceState(null, "", `?${query.toString()}`);
+  }
+
+  React.useEffect(() => {
+    updateQueryString(currentPage, search);
+  }, [currentPage, search]);
+
+  React.useEffect(() => {
+    const storedPage = localStorage.getItem("currentPage");
+    const storedSearch = localStorage.getItem("search");
+
+    const page = storedPage ? parseInt(storedPage, 10) : 0;
+    const keyword = storedSearch || "";
+
+    setCurrentPage(page);
+    setSearch(keyword);
+
+    const filtered = todos.filter((todo) =>
+      todo.task.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredTodos(filtered);
+  }, [todos]);
+
+  React.useEffect(() => {
+    localStorage.setItem("currentPage", currentPage.toString());
+    localStorage.setItem("search", search);
+    updateQueryString(currentPage, search);
+  }, [currentPage, search]);
+
+  {
+    /* 
+    Table & Pagination implementation
+    */
+  }
 
   const todosPerPage: number = 3;
   const total = Math.ceil(filteredTodos.length / todosPerPage);
@@ -72,7 +125,7 @@ export default function Todos({
     setFilteredTodos(todos);
     setIsSearch(false);
   }
-  
+
   const startIdx = (currentPage - 1) * todosPerPage;
   const currentTodos = filteredTodos.slice(startIdx, startIdx + todosPerPage);
 
