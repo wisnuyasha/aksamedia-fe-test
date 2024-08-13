@@ -83,7 +83,7 @@ export default function EditTodos({
               <input
                 name="updatedTask"
                 className={clsxm(
-                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-lg dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
+                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-base dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
                 )}
                 value={updatedTask}
                 onChange={(e) => setUpdatedTask(e.target.value)}
@@ -102,7 +102,7 @@ export default function EditTodos({
               <textarea
                 name="updatedDesc"
                 className={clsxm(
-                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-lg dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
+                  "w-fit md:min-w-[20rem] px-3 py-2 rounded-lg border-[1px] shadow-sm dark:text-white text-base dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
                 )}
                 value={updatedDesc}
                 onChange={(e) => setUpdatedDesc(e.target.value)}

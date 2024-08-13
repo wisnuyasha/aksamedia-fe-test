@@ -21,9 +21,9 @@ export default function CreateTodo() {
         desc: desc,
       };
 
-      setTodos([...todos, newTodo]);
-
-      localStorage.setItem("todos", JSON.stringify(todos));
+      const createTodo = [...todos, newTodo];
+      setTodos(createTodo);
+      localStorage.setItem("todos", JSON.stringify(createTodo));
 
       setTask("");
       setDesc("");
