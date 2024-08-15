@@ -1,7 +1,8 @@
 import React, { FormEvent } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import clsxm from "../../utils/clsxm";
-import { TTodo } from "../../types/TTodo";
+import { TTodo } from "../../types/TTodos";
+import { useTodosStore } from "../../store/useTodosStore";
 
 export default function EditTodosModal({
   todo,
@@ -12,6 +13,8 @@ export default function EditTodosModal({
   isModal: boolean;
   handleIsModal: () => void;
 }) {
+  const { todos, mutateTodos } = useTodosStore();
+
   const [updatedTask, setUpdatedTask] = React.useState<string>(
     todo?.task ?? ""
   );
@@ -23,11 +26,6 @@ export default function EditTodosModal({
     setUpdatedTask(todo?.task ?? "");
     setUpdatedDesc(todo?.desc ?? "");
   }, [todo]);
-
-  function getTodosFromLocalStorage(): TTodo[] {
-    const todosRaw = localStorage.getItem("todos");
-    return JSON.parse(todosRaw ?? "[]");
-  }
 
   function handleEdit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,11 +40,10 @@ export default function EditTodosModal({
         task: updatedTask,
         desc: updatedDesc,
       };
-      const todos = getTodosFromLocalStorage();
       const updatedTodos = todos.map((todo) =>
         todo.id === updatedTodo.id ? updatedTodo : todo
       );
-      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      mutateTodos(updatedTodos);
       handleIsModal();
     }
   }

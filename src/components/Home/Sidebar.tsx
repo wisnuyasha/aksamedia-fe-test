@@ -2,9 +2,14 @@ import { SidebarMenus } from "../../constants/SidebarMenus";
 import { useActivePageStore } from "../../store/useActivePageStore";
 import { capitalize } from "../../utils/capitalize";
 import clsxm from "../../utils/clsxm";
+import useSidebar from "../../hooks/Home/useSidebar";
 
 export default function Sidebar() {
   const { activePage, handleActivePage } = useActivePageStore();
+
+  const { useSidebarKey } = useSidebar();
+  useSidebarKey();
+
   return (
     <div className="md:h-screen px-10 pt-28 pb-11 md:px-16 md:py-28 w-full md:w-1/4 flex flex-col justify-start items-start">
       <div className="flex flex-col ">

@@ -1,32 +1,22 @@
 import React, { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { Users } from "../../constants/Users";
 import clsxm from "../../utils/clsxm";
-import { useUserStore } from "../../store/useUserStore";
+import useLogin from "../../hooks/Login/useLogin";
 
 export default function LoginForm() {
-  const { mutateName } = useUserStore();
-
   const [errors, setErrors] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
-  const navigate = useNavigate();
+  const { handleLogin } = useLogin();
 
-  function handleLogin(event: FormEvent<HTMLFormElement>) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (name === Users.name && password === Users.password) {
-      setErrors("");
-      mutateName(name);
-      navigate("/");
-    } else {
-      setErrors("Wrong name or password");
-    }
+    handleLogin({ name, password, setErrors });
   }
 
   return (
-    <form onSubmit={handleLogin} className="flex flex-col gap-y-3">
+    <form onSubmit={onSubmit} className="flex flex-col gap-y-3">
       <div className="flex flex-col gap-y-1.5">
         <label
           className={clsxm(

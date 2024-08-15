@@ -1,22 +1,11 @@
-import React from "react";
 import { MdLogout } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/useUserStore";
+import { useNavbar } from "../../hooks/Layouts/useNavbar";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const { userName, logout } = useUserStore();
-
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate("/login");
-  }
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const { userName } = useUserStore();
+  const { isOpen, handleLogout, toggleDropdownOpen, toggleDropdownClose } =
+    useNavbar();
 
   return (
     <nav className="absolute top-5 md:right-10 md:top-5 rounded-lg px-6 bg-white shadow-sm dark:bg-zinc-950 py-3 border-[1px] border-zinc-300 dark:border-zinc-700">
@@ -26,7 +15,7 @@ export default function Navbar() {
         </p>
         <div className="min-h-5 w-[1px] rounded-sm bg-zinc-300 dark:bg-zinc-700" />
         <MdLogout
-          onClick={toggleDropdown}
+          onClick={toggleDropdownOpen}
           className="text-zinc-900 size-5 cursor-pointer dark:text-zinc-100 dark:hover:text-zinc-300 hover:duration-500 hover:scale-125 transition-all hover:ease-in-out"
         />
         {isOpen && (
@@ -46,7 +35,7 @@ export default function Navbar() {
                   </span>
                 </div>
                 <div
-                  onClick={toggleDropdown}
+                  onClick={toggleDropdownClose}
                   className="w-full h-full cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md px-3 py-0.5"
                 >
                   <span className="font-medium text-zinc-900 dark:text-zinc-100 text-sm">
