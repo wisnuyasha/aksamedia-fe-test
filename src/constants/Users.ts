@@ -1,6 +1,6 @@
-import { TUser } from "../types/TUser";
+import { TUser } from '../types/TUser'
 
-export const Users: TUser = {
-  name: "agus",
-  password: "aguslaparbuk",
-};
+export const User: TUser = {
+  name: 'agus',
+  password: 'aguslaparbuk',
+}
