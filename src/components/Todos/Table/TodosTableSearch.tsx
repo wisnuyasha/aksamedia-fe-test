@@ -1,99 +1,99 @@
-import { FiSearch } from "react-icons/fi";
+import { FiSearch } from 'react-icons/fi'
 
-import React, { FormEvent } from "react";
-import { TTodo } from "../../../types/TTodos";
-import clsxm from "../../../utils/clsxm";
-import { useSearchParams } from "react-router-dom";
+import React, { FormEvent } from 'react'
+import { TTodo } from '../../../types/TTodos'
+import clsxm from '../../../utils/clsxm'
+import { useSearchParams } from 'react-router-dom'
 
 interface SearchTableProps {
-  todos: TTodo[];
+  todos: TTodo[]
   onSearch: (
     filteredTodos: TTodo[],
     isSearching: boolean,
     resetPage?: boolean
-  ) => void;
+  ) => void
 }
 
 export default function TodosTableSearch({
   todos,
   onSearch,
 }: SearchTableProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [searchInput, setSearchInput] = React.useState<string>(
-    searchParams.get("search") || ""
-  );
+    searchParams.get('search') || ''
+  )
   const [searchQuery, setSearchQuery] = React.useState<string>(
-    searchParams.get("search") || ""
-  );
+    searchParams.get('search') || ''
+  )
 
   React.useEffect(() => {
     if (searchQuery) {
-      searchParams.set("search", searchQuery);
-      setSearchParams(searchParams);
+      searchParams.set('search', searchQuery)
+      setSearchParams(searchParams)
 
-      localStorage.setItem("search", searchQuery);
+      localStorage.setItem('search', searchQuery)
 
       const filtered = todos.filter((todo) =>
         todo.task.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      onSearch(filtered, true, true);
+      )
+      onSearch(filtered, true, true)
     } else {
-      onSearch(todos, false);
+      onSearch(todos, false)
     }
-  }, [searchQuery, onSearch, todos, searchParams, setSearchParams]);
+  }, [searchQuery, onSearch, todos, searchParams, setSearchParams])
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSearchQuery(searchInput);
-  };
+    event.preventDefault()
+    setSearchQuery(searchInput)
+  }
 
   const handleClearFilter = () => {
-    searchParams.delete("search");
-    setSearchParams(searchParams);
+    searchParams.delete('search')
+    setSearchParams(searchParams)
 
-    localStorage.removeItem("search");
+    localStorage.removeItem('search')
 
-    setSearchInput("");
-    setSearchQuery("");
+    setSearchInput('')
+    setSearchQuery('')
 
-    onSearch(todos, false, true);
-  };
+    onSearch(todos, false, true)
+  }
 
   return (
     <form
       onSubmit={handleSearch}
-      className="relative w-fit flex flex-col gap-y-2 sm:flex-row gap-x-4 items-center mt-5 h-fit"
+      className="relative mt-5 flex h-fit w-fit flex-col items-center gap-x-4 gap-y-2 sm:flex-row"
     >
       <input
         name="task"
         className={clsxm(
-          "w-fit max-w-52 md:min-w-64 pr-3 pl-9 py-1.5 rounded-lg border-[1px] shadow-sm dark:text-white text-base dark:bg-transparent dark:border-zinc-700 border-zinc-300 focus:border-[1px] focus:outline-zinc-700 hover:border-zinc-500 hover:duration-500"
+          'w-fit max-w-52 rounded-lg border-[1px] border-zinc-300 py-1.5 pl-9 pr-3 text-base shadow-sm hover:border-zinc-500 hover:duration-500 focus:border-[1px] focus:outline-zinc-700 dark:border-zinc-700 dark:bg-transparent dark:text-white md:min-w-64'
         )}
         placeholder="Search.."
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
       />
-      <div className="h-fit flex items-start w-full mb-1 gap-x-2">
+      <div className="mb-1 flex h-fit w-full items-start gap-x-2">
         <button
           type="submit"
-          className="h-[38px] px-3.5 w-full bg-zinc-900 dark:bg-zinc-50 border-[1px] border-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-300 hover:duration-500 rounded-lg"
+          className="h-[38px] w-full rounded-lg border-[1px] border-zinc-900 bg-zinc-900 px-3.5 hover:bg-zinc-700 hover:duration-500 dark:bg-zinc-50 dark:hover:bg-zinc-300"
         >
-          <p className="font-sans font-medium text-xs md:text-sm text-zinc-100 dark:text-zinc-900">
+          <p className="font-sans text-xs font-medium text-zinc-100 dark:text-zinc-900 md:text-sm">
             Apply
           </p>
         </button>
         <button
           onClick={handleClearFilter}
-          className="h-[38px] px-3 w-full bg-transparent dark:bg-transparent border-[1px] border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:duration-500 rounded-lg"
+          className="h-[38px] w-full rounded-lg border-[1px] border-zinc-300 bg-transparent px-3 hover:bg-zinc-200 hover:duration-500 dark:border-zinc-700 dark:bg-transparent dark:hover:bg-zinc-700"
         >
-          <p className="font-sans font-medium text-xs md:text-sm text-zinc-900 dark:text-zinc-100">
+          <p className="font-sans text-xs font-medium text-zinc-900 dark:text-zinc-100 md:text-sm">
             Cancel
           </p>
         </button>
       </div>
 
-      <FiSearch className="absolute size-[17px] text-zinc-600 left-2.5 top-2.5" />
+      <FiSearch className="absolute left-2.5 top-2.5 size-[17px] text-zinc-600" />
     </form>
-  );
+  )
 }

@@ -1,3 +1,3 @@
 export interface TSidebarMenu {
-  name: "todos" | "add" | "profile";
+  name: 'todos' | 'add' | 'profile'
 }

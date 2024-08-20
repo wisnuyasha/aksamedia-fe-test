@@ -1,3 +1,3 @@
-import { TSidebarMenu } from "../types/TSidebarMenus";
+import { TSidebarMenu } from '../types/TSidebarMenus'
 
-export const SidebarMenus: TSidebarMenu["name"][] = ["todos", "add", "profile"];
+export const SidebarMenus: TSidebarMenu['name'][] = ['todos', 'add', 'profile']

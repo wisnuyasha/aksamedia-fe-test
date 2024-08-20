@@ -1,33 +1,33 @@
-import { useState, useEffect } from "react";
-import { MdSunny } from "react-icons/md";
-import { MdDarkMode } from "react-icons/md";
+import { useState, useEffect } from 'react'
+import { MdSunny } from 'react-icons/md'
+import { MdDarkMode } from 'react-icons/md'
 
 function ToggleTheme() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem("isDarkMode");
+    const savedMode = localStorage.getItem('isDarkMode')
     return savedMode
       ? JSON.parse(savedMode)
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+      : window.matchMedia('(prefers-color-scheme: dark)').matches
+  })
 
   useEffect(() => {
     if (isDarkMode) {
-      document.body.classList.add("dark");
+      document.body.classList.add('dark')
     } else {
-      document.body.classList.remove("dark");
+      document.body.classList.remove('dark')
     }
 
-    localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
+    localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode))
+  }, [isDarkMode])
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+    setIsDarkMode(!isDarkMode)
+  }
 
   return (
     <button
       onClick={toggleDarkMode}
-      className="absolute left-5 md:left-10 top-6 md:top-5 rounded-md border-[1px] border-zinc-300 bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:border-zinc-700 dark:hover:bg-zinc-700 hover:transition-all hover:ease-linear drop-shadow-sm hover:duration-200 p-3"
+      className="absolute left-5 top-6 rounded-md border-[1px] border-zinc-300 bg-white p-3 drop-shadow-sm hover:bg-zinc-100 hover:transition-all hover:duration-200 hover:ease-linear dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-700 md:left-10 md:top-5"
     >
       {isDarkMode ? (
         <MdDarkMode className="size-5 text-zinc-100" />
@@ -35,7 +35,7 @@ function ToggleTheme() {
         <MdSunny className="size-5 text-zinc-800" />
       )}
     </button>
-  );
+  )
 }
 
-export default ToggleTheme;
+export default ToggleTheme

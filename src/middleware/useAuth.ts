@@ -1,29 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../store/useUserStore";
-import React from "react";
+import { useNavigate } from 'react-router-dom'
+import { useUserStore } from '../store/useUserStore'
+import React from 'react'
 
 const useAuthLogin = () => {
-  const navigate = useNavigate();
-  const { userName } = useUserStore();
+  const navigate = useNavigate()
+  const { userName } = useUserStore()
 
   React.useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    if (storedName === "agus" && userName === "agus") {
-      navigate("/");
+    const storedName = localStorage.getItem('name')
+    if (storedName === 'agus' && userName === 'agus') {
+      navigate('/')
     }
-  }, [navigate, userName]);
-};
+  }, [navigate, userName])
+}
 
 const useAuthHome = () => {
-  const navigate = useNavigate();
-  const { userName } = useUserStore();
+  const navigate = useNavigate()
+  const { userName } = useUserStore()
 
   React.useEffect(() => {
-    const storedName = localStorage.getItem("name");
+    const storedName = localStorage.getItem('name')
     if (!userName && !storedName) {
-      navigate("/login");
+      navigate('/login')
     }
-  }, [navigate, userName]);
-};
+  }, [navigate, userName])
+}
 
-export { useAuthHome, useAuthLogin };
+export { useAuthHome, useAuthLogin }
