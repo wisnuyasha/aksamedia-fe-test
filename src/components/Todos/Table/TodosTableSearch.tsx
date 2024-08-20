@@ -3,6 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import React, { FormEvent } from "react";
 import { TTodo } from "../../../types/TTodos";
 import clsxm from "../../../utils/clsxm";
+import { useSearchParams } from "react-router-dom";
 
 interface SearchTableProps {
   todos: TTodo[];
@@ -17,22 +18,20 @@ export default function TodosTableSearch({
   todos,
   onSearch,
 }: SearchTableProps) {
-  const [searchInput, setSearchInput] = React.useState<string>(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("search") || "";
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = React.useState<string>(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("search") || "";
-  });
+  const [searchInput, setSearchInput] = React.useState<string>(
+    searchParams.get("search") || ""
+  );
+  const [searchQuery, setSearchQuery] = React.useState<string>(
+    searchParams.get("search") || ""
+  );
 
   React.useEffect(() => {
     if (searchQuery) {
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.set("search", searchQuery);
-      const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-      window.history.replaceState({}, "", newUrl);
+      searchParams.set("search", searchQuery);
+      setSearchParams(searchParams);
+
       localStorage.setItem("search", searchQuery);
 
       const filtered = todos.filter((todo) =>
@@ -42,7 +41,7 @@ export default function TodosTableSearch({
     } else {
       onSearch(todos, false);
     }
-  }, [searchQuery, onSearch, todos]);
+  }, [searchQuery, onSearch, todos, searchParams, setSearchParams]);
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,11 +49,8 @@ export default function TodosTableSearch({
   };
 
   const handleClearFilter = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    urlParams.set("search", "");
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-    window.history.replaceState({}, "", newUrl);
+    searchParams.delete("search");
+    setSearchParams(searchParams);
 
     localStorage.removeItem("search");
 

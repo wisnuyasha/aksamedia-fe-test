@@ -2,6 +2,7 @@ import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import clsxm from "../../../utils/clsxm";
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 
 interface PaginationProps {
   currentPage: number;
@@ -14,15 +15,14 @@ export default function TodosTablePagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
-  React.useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("page", currentPage.toString());
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-    window.history.replaceState({}, "", newUrl);
+  React.useEffect(() => {
+    searchParams.set("page", currentPage.toString());
+    setSearchParams(searchParams);
 
     localStorage.setItem("currentPage", currentPage.toString());
-  }, [currentPage]);
+  }, [currentPage, searchParams, setSearchParams]);
 
   const handlePrevious = () => {
     if (currentPage - 1 > 0) {

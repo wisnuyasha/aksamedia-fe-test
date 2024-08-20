@@ -53,7 +53,7 @@ export default function Todos() {
   function handleDelete(id: string) {
     deleteTodo(id);
 
-    const newFilteredTodos = todos.filter((todo) => todo.id !== id);
+    const newFilteredTodos = todos.filter((todo: TTodo) => todo.id !== id);
     const newTotalPages = Math.ceil(newFilteredTodos.length / todosPerPage);
 
     if (currentPage > newTotalPages) {
