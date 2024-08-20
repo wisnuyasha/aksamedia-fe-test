@@ -22,3 +22,12 @@ Wisnuyasha Faizal / ITS
   - [x] Create (local storage) & Delete
 - [x] Light & dark mode
 - [x] Edit user page
+
+## Cutoff
+
+- [x] Global state management (zustand)
+  - [x] user state
+  - [x] sidebar state
+  - [x] todo state
+- [x] Modularize all component
+- [x] Hotkey on sidebar & logout
